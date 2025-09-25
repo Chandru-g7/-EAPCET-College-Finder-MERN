@@ -105,7 +105,7 @@ export default function CollegeFinder() {
             <div className="stats-section">
               <div className="stat-card">
                 <span className="stat-number">{stats.totalColleges}+</span>
-                <span className="stat-label">Colleges</span>
+                <span className="stat-label">Colleges(branches)</span>
               </div>
               <div className="stat-card">
                 <span className="stat-number">{stats.availableSeats}</span>
