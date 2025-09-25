@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import './CollegeFinder.css';
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 
 export default function CollegeFinder() {
   const [filters, setFilters] = useState({
@@ -30,7 +33,7 @@ export default function CollegeFinder() {
 
   const fetchInitialStats = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/stats');
+      const res = await axios.get(`${API_URL}/stats`);
       setStats(res.data);
     } catch (err) {
       console.error("Failed to load statistics");
@@ -42,21 +45,21 @@ export default function CollegeFinder() {
   };
 
   const fetchColleges = async () => {
-    try {
-      setLoading(true);
-      setError("");
-      const params = new URLSearchParams(filters).toString();
-      const res = await axios.get(`http://localhost:5000/colleges?${params}`);
-      setColleges(res.data);
-    } catch (err) {
-      setError(
-        err.response?.data?.error || "Failed to fetch colleges. Try again."
-      );
-      setColleges([]);
-    } finally {
-      setLoading(false);
-    }
-  };
+      try {
+        setLoading(true);
+        setError("");
+        const params = new URLSearchParams(filters).toString();
+        const res = await axios.get(`${API_URL}/colleges?${params}`);
+        setColleges(res.data);
+      } catch (err) {
+        setError(
+          err.response?.data?.error || "Failed to fetch colleges. Try again."
+        );
+        setColleges([]);
+      } finally {
+        setLoading(false);
+      }
+    };
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
