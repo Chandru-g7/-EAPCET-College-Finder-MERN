@@ -52,16 +52,20 @@ app.get("/colleges", async (req, res) => {
 
     let colleges = await College.find(filter).lean();
 
-    colleges = colleges.map((c) => {
+   colleges = colleges.map((c) => {
       const cutoff = category !== "ALL" ? c.cutoffs?.[category] : null;
       return { ...c, selected_cutoff: cutoff };
     });
 
     if (category !== "ALL") {
       colleges = colleges.filter(
-        (c) => c.selected_cutoff && c.selected_cutoff >= rank && c.selected_cutoff <= rank + 5000
+        (c) =>
+          c.selected_cutoff &&
+          c.selected_cutoff >= 1 &&
+          c.selected_cutoff <= rank + 5000
       );
     }
+
 
     const uniqueColleges = [];
     const seen = new Set();
