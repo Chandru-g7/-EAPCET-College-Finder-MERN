@@ -1,56 +1,93 @@
+// server.js
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+require("dotenv").config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Connect to MongoDB Atlas
-const mongoURL = "mongodb+srv://chandu_eapcet:chandu775@eapcet775-college-finder.1vafffp.mongodb.net/Eapcet_college_finder?retryWrites=true&w=majority";
-mongoose.connect(mongoURL)
-  .then(() => console.log("MongoDB Atlas connected"))
-  .catch(err => console.log(err));
+// MongoDB Atlas connection
+const mongoURL = process.env.MONGO_URI || "your_local_fallback_url";
+mongoose
+  .connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("✅ MongoDB Atlas connected"))
+  .catch((err) => console.error("❌ MongoDB connection error:", err));
 
-// Schema (flexible)
+// Flexible Schema (to accept all fields)
 const CollegeSchema = new mongoose.Schema({}, { strict: false });
 const College = mongoose.model("College", CollegeSchema);
 
 // Test route
 app.get("/", (req, res) => {
-  res.send("Backend is working!");
+  res.send("🚀 Backend is working!");
 });
 
-// API route to filter colleges
+// Colleges API
 app.get("/colleges", async (req, res) => {
   try {
-    let { rank, category, region, district } = req.query;
+    let { rank, branch, category, district, region } = req.query;
 
-    // Default values if missing
+    // Default values
     rank = rank ? parseInt(rank) : 10000;
-    category = category || "OC_BOYS";
-    region = region || "ALL";
+    branch = branch || "ALL";
+    category = category || "ALL";
     district = district || "ALL";
+    region = region || "ALL";
 
+    // MongoDB filters
     const filter = {};
-    if (region !== "ALL") filter.A_REG = region;
+    if (branch !== "ALL") filter.branch_code = branch;
     if (district !== "ALL") filter.DIST = district;
+    if (region !== "ALL") filter.REG = region;
 
-    // Get colleges matching region/district
-    const colleges = await College.find(filter);
+    // Fetch colleges
+    let colleges = await College.find(filter).lean();
 
-    // Filter by cutoff rank
-    const result = colleges.filter(c => {
-      const cutoff = c.cutoffs?.[category];
-      return cutoff && cutoff <= rank + 5000; // rank + 5000
+    // Add cutoff for selected category
+    colleges = colleges.map((c) => {
+      const cutoff = category !== "ALL" ? c.cutoffs?.[category] : null;
+      return { ...c, selected_cutoff: cutoff };
     });
 
-    res.json(result);
+    // Apply cutoff filtering (rank → rank+5000)
+    if (category !== "ALL") {
+      colleges = colleges.filter(
+        (c) =>
+          c.selected_cutoff &&
+          c.selected_cutoff >= rank && // greater than or equal to user rank
+          c.selected_cutoff <= rank + 5000 // within +5000 range
+      );
+    }
+
+    // Deduplicate college-branch entries
+    const uniqueColleges = [];
+    const seen = new Set();
+    colleges.forEach((c) => {
+      const key = c.INSTCODE + "_" + c.branch_code;
+      if (!seen.has(key)) {
+        uniqueColleges.push(c);
+        seen.add(key);
+      }
+    });
+
+    // Sort ascending by cutoff
+    uniqueColleges.sort((a, b) => {
+      if (!a.selected_cutoff) return 1;
+      if (!b.selected_cutoff) return -1;
+      return a.selected_cutoff - b.selected_cutoff;
+    });
+
+    res.json(uniqueColleges);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error("❌ Error fetching colleges:", err);
+    res.status(500).json({ error: "Failed to fetch colleges" });
   }
 });
 
 // Start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () =>
+  console.log(`🚀 Server running on http://localhost:${PORT}`)
+);

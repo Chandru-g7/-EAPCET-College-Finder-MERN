@@ -1,0 +1,468 @@
+.college-finder {
+  min-height: 100vh;
+  min-width: 100vw;
+  background: linear-gradient(135deg, #669fea 0%, #366a7a 100%);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Header Styles */
+.header {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 20px 0;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  color: #2d3748;
+  margin: 0;
+  font-size: 2rem;
+}
+
+.tagline {
+  color: #718096;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.stats-section {
+  display: flex;
+  gap: 20px;
+}
+
+.stat-card {
+  text-align: center;
+  padding: 10px 20px;
+  background: #f7fafc;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+}
+
+.stat-number {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #4a5568;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: #718096;
+}
+
+/* Main Content */
+.main-content {
+  padding: 40px 0;
+}
+
+/* Cards */
+.filters-card {
+  background: white;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.card-header h3 {
+  margin: 0;
+  color: #2d3748;
+}
+
+.clear-btn {
+  background: #e2e8f0;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #4a5568;
+}
+
+.clear-btn:hover {
+  background: #cbd5e0;
+}
+
+/* Filters Grid */
+.filters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-group label {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #4a5568;
+}
+
+.filter-group input,
+.filter-group select {
+  padding: 12px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+}
+
+.filter-group input:focus,
+.filter-group select:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.rank-input {
+  font-weight: bold;
+  color: white;
+}
+
+/* Buttons */
+.search-btn {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, #80bdcc, #36677a);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.search-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.search-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Filter Tags */
+.filters-summary {
+  background: white;
+  color:black;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.filter-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.filter-tag {
+  background: #edf2f7;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-tag button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #718096;
+}
+
+/* College Cards */
+.college-card {
+  background: white;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  border-left: 4px solid #e2e8f0;
+  transition: transform 0.2s;
+}
+
+.college-card:hover {
+  transform: translateY(-2px);
+}
+
+.college-card.safe {
+  border-left-color: #48bb78;
+}
+
+.college-card.moderate {
+  border-left-color: #ed8936;
+}
+
+.college-card.risky {
+  border-left-color: #f56565;
+}
+
+.college-header {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.college-basic-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.college-rank {
+  background: #667eea;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+.college-name {
+  margin: 0;
+  color: #2d3748;
+}
+
+.college-code {
+  background: #f7fafc;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  color: #718096;
+}
+
+.expand-btn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #718096;
+}
+
+.college-details {
+  padding: 0 20px 20px;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+}
+
+.detail-item {
+  display: flex;
+  color:black;
+  flex-direction: column;
+}
+
+.detail-item label {
+  font-size: 12px;
+  color: #718096;
+  margin-bottom: 4px;
+}
+
+.branch-badge {
+  background: #bee3f8;
+  color: #2b6cb0;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.cutoff-rank {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.cutoff-rank.safe { color: #48bb78; }
+.cutoff-rank.moderate { color: #ed8936; }
+.cutoff-rank.risky { color: #f56565; }
+
+/* Loading and Error States */
+.loading-state,
+.error-state,
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  background: white;
+  color:black;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 10px;
+}
+
+.spinner-large {
+  width: 40px;
+  height: 40px;
+  border-width: 4px;
+  margin: 0 auto 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Footer */
+.footer {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 20px 0;
+  text-align: center;
+  color: #718096;
+  border-top: 1px solid #e2e8f0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .filters-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .college-basic-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}
+/* Add these styles to your CollegeFinder.css file */
+
+/* Category Warning in Filters Summary */
+.category-warning {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 15px;
+  padding: 12px;
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 8px;
+  color: #856404;
+}
+
+.warning-icon {
+  font-size: 1.2em;
+}
+
+.warning-text {
+  font-weight: 500;
+}
+
+/* Results Warning Banner */
+.results-warning {
+  margin-bottom: 20px;
+}
+
+.warning-banner {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 20px;
+  background: #d1ecf1;
+  border: 1px solid #bee5eb;
+  border-radius: 8px;
+  color: #0c5460;
+}
+
+.warning-content strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.warning-content p {
+  margin: 0;
+  font-size: 0.9em;
+}
+
+/* Cutoff Rank Note */
+.cutoff-note {
+  font-size: 0.8em;
+  color: #6c757d;
+  font-style: italic;
+  margin-left: 5px;
+}
+
+/* Empty State Warning */
+.empty-state-warning {
+  margin-top: 15px;
+  padding: 10px 15px;
+  background: #e2e3e5;
+  border-radius: 6px;
+  color: #383d41;
+}
+
+.empty-state-warning p {
+  margin: 0;
+}
+
+/* Make category label stand out when not selected */
+.filter-group label[for="category"] {
+  position: relative;
+}
+
+.filter-group label[for="category"]::after {
+  content: "*";
+  color: #dc3545;
+  margin-left: 4px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .category-warning,
+  .warning-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .warning-content {
+    width: 100%;
+  }
+}
