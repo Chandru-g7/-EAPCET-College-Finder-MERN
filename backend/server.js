@@ -62,7 +62,7 @@ app.get("/colleges", async (req, res) => {
         (c) =>
           c.selected_cutoff &&
           c.selected_cutoff >= 1 &&
-          c.selected_cutoff <= rank + 5000
+          c.selected_cutoff <= rank + 15000
       );
     }
 
@@ -91,5 +91,5 @@ app.get("/colleges", async (req, res) => {
 });
 
 // Dynamic port for Render
-const PORT = process.env.PORT || 15000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
